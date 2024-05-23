@@ -8,7 +8,7 @@
     <div th:replace="header :: body"></div>
 
     <!--비번 리다이렉트 받아-->
-    <div th:if="${error}" th:text="${error}" id="error"></div>
+    <div th:if="${error}" th:text="${error}" id="error" style="display:none;"></div>
  <h1 class="mt-5 text-center">글수정</h1>
  <form action="/board/update" class="forms" method="post"> 
     <input type="hidden" name="id" th:value="${board.id}">
@@ -34,7 +34,7 @@
     </div>
     <div class="form-group">
         <label for="contents">내용</label> 
-        <textarea name="contents" class="form-control" rows="10"
+        <textarea name="contents" id="editor" class="form-control" rows="10"
         th:text="${board.contents}"></textarea>
     </div>
     <div class="my-4 text-center">
@@ -46,6 +46,15 @@
  <a href="/board/list">목록보기</a>
     <div th:replace="footer :: body"></div>
   </div>
-
+<script>
+    /* 틀린화면 팝업 */
+    $(function(){        
+        CKEDITOR.replace("editor"); //ckeditor 적용하려는곳 id값 지정 후 ()에 넣기
+        const error = $('#error').text();
+        if(error){
+            alert(error);
+        }
+    });
+</script>
 </body>
 </html>

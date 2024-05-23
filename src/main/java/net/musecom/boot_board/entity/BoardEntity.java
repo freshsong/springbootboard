@@ -45,4 +45,16 @@ public class BoardEntity extends TimesEntity {
 
         return bEntity; 
     }
+
+    public static BoardEntity toUpdateEntity(BoardDto bDto){
+        BoardEntity bEntity = new BoardEntity();
+        bEntity.setId(bDto.getId());
+        bEntity.setBwriter(bDto.getBwriter());
+        bEntity.setPass(bDto.getPass());
+        bEntity.setTitle(bDto.getTitle());
+        bEntity.setContents(bDto.getContents());
+        bEntity.setHits(bDto.getHits());
+
+        return bEntity; 
+    }
 }

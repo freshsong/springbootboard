@@ -75,15 +75,17 @@ public class BoardController {
      */   
 
     @PostMapping("/update")
-    public String update(@ModelAttribute BoardDto bDto, RedirectAttributes redirectAttributes){
+    public String update(@ModelAttribute BoardDto bDto, Model model, RedirectAttributes redirectAttributes){
        //비밀번호 검증을 위해 bDto에서 받을 비번과 boardDto에 담겨있는 비번을 비교한다.
        //findbyid로 데이터 꺼내서 boarddto에 담음 
        BoardDto boardDto = bService.findById(bDto.getId());
         if(boardDto.getPass().equals(bDto.getPass())){
             //수정로직 처리
-            return null;
+            BoardDto board = bService.update(bDto);
+            model.addAttribute("board", board);
+            return "detail";
         }else{
-            redirectAttributes.addAttribute("error", "비밀번호가 일치하지 않습니다.");
+            redirectAttributes.addFlashAttribute("error", "비밀번호가 일치하지 않습니다.");
             return "redirect:/board/update/" + bDto.getId();
         }
     }
