@@ -45,7 +45,7 @@ public class BoardEntity extends TimesEntity {
 
         return bEntity; 
     }
-
+    /* 수정 => 다 필요 , 하나라도 빠지니까 에러뜸 */
     public static BoardEntity toUpdateEntity(BoardDto bDto){
         BoardEntity bEntity = new BoardEntity();
         bEntity.setId(bDto.getId());
