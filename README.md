@@ -1,6 +1,5 @@
 # springbootboard
 - 스프링 부트로 게시판 만들기 작업
-- https://freshsong.github.io/springbootboard
 
 # 작업환경
 - vscode로 자바 11 -> 17 업데이트 후 작업진행
