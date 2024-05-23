@@ -1,11 +1,12 @@
 package net.musecom.boot_board.controller;
 
-import java.lang.ProcessBuilder.Redirect;
+
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -95,18 +94,31 @@ public class BoardController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteForm(@PathVariable(value = "id") Long id) {
-        BoardDto boardDto = bService.findById(id);
+    public String deleteForm(@PathVariable(value = "id") Long id, Model model) {
+        
+        model.addAttribute("id", id);
+        return "deleteForm";
         //1. 비밀번호 검증 성공, 실패 로직 작성
 
 
     }
 
     @PostMapping("/delete")
-    public String delete(@PathVariable(value = "id") Long id) {
-        //삭제로직 작성
-        //작업시간 1시간 
-        return "entity";
+    public String delete(@RequestParam Long id, @RequestParam String pass, RedirectAttributes redirectAttributes, Model model) {
+        //1. pass에 값이 있는지?
+        if(pass == null || pass.isEmpty()){
+            redirectAttributes.addFlashAttribute("error", "비밀번호를 입력하세요.");
+            return "redirect:delete/" + id;
+        }
+        //2. id와 pass가 db와 같은지
+        BoardDto boardDto = bService.findById(id);
+        if(boardDto != null && boardDto.getPass().equals(pass)){
+            //게시물 삭제 로직
+        return "redirect:list";
+        }else{
+            redirectAttributes.addFlashAttribute("error", "비밀번호가 틀렸습니다.");
+            return "redirect:delete/" + id;
+        }
     }
     
     
