@@ -103,23 +103,24 @@ public class BoardController {
 
     }
 
+    
     @PostMapping("/delete")
     public String delete(@RequestParam Long id, @RequestParam String pass, RedirectAttributes redirectAttributes, Model model) {
         //1. pass에 값이 있는지?
-        if(pass == null || pass.isEmpty()){
+        if(pass==null || pass.isEmpty()){
             redirectAttributes.addFlashAttribute("error", "비밀번호를 입력하세요.");
             return "redirect:delete/" + id;
         }
-        //2. id와 pass가 db와 같은지
+        //2. id 와 pass 가 db 같은지 ?
         BoardDto boardDto = bService.findById(id);
         if(boardDto != null && boardDto.getPass().equals(pass)){
-            //게시물 삭제 로직
-        return "redirect:list";
+            //게시물 삭제로직
+            return "redirect:list";
         }else{
             redirectAttributes.addFlashAttribute("error", "비밀번호가 틀렸습니다.");
-            return "redirect:delete/" + id;
+            return "redirect:delete/" + id;            
         }
+       //삭제와 페이징을 금요일날 합니다.    
+    
     }
-    
-    
 }

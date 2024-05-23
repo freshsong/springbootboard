@@ -3,12 +3,11 @@
 <head th:replace="header :: head">
 </head>
 <body>
-
+    
   <div class="container">  
     <div th:replace="header :: body"></div>
 
-    <!--비번 리다이렉트 받아-->
-    <div th:if="${error}" th:text="${error}" id="error" style="display:none;"></div>
+ <div th:if="${error}" th:text="${error}" id="error" style="display:none;"></div>
  <h1 class="mt-5 text-center">글수정</h1>
  <form action="/board/update" class="forms" method="post"> 
     <input type="hidden" name="id" th:value="${board.id}">
@@ -48,9 +47,9 @@
     <div th:replace="footer :: body"></div>
   </div>
 <script>
-    /* 틀린화면 팝업 */
-    $(function(){        
-        CKEDITOR.replace("editor"); //ckeditor 적용하려는곳 id값 지정 후 ()에 넣기
+    $(function(){
+        CKEDITOR.replace("editor");
+
         const error = $('#error').text();
         if(error){
             alert(error);
